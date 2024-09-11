@@ -1,21 +1,27 @@
+# Utiliser une image PHP officielle comme image de base
 FROM php:8.1-cli
 
-# Installer les extensions PHP nécessaires
-RUN apt-get update && \
-    apt-get install -y libzip-dev unzip && \
-    docker-php-ext-install mbstring
-
-# Installer Composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+# Installer les extensions nécessaires et les outils
+RUN apt-get update && apt-get install -y \
+    libxml2-dev \
+    git \
+    unzip \
+    && docker-php-ext-install xml \
+    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
+    && composer --version
 
 # Définir le répertoire de travail
-WORKDIR /app
+WORKDIR /var/www/html
 
-# Copier les fichiers du projet
+# Copier le fichier composer.json et installer les dépendances
+COPY composer.json composer.lock ./
+RUN composer install --no-dev --optimize-autoloader
+
+# Copier le code source
 COPY . .
 
-# Installer les dépendances PHP
-RUN composer install
+# Installer PHPUnit
+RUN composer require --dev phpunit/phpunit
 
-# Exécuter les tests PHPUnit
-CMD ["./vendor/bin/phpunit"]
+# Commande pour exécuter les tests
+CMD ["vendor/bin/phpunit"]
