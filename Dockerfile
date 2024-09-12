@@ -13,12 +13,11 @@ RUN apt-get update && apt-get install -y \
 # Définir le répertoire de travail
 WORKDIR /var/www/html
 
-# Copier le fichier composer.json et installer les dépendances
-COPY composer.json composer.lock ./
-RUN composer install --no-dev --optimize-autoloader
-
 # Copier le code source
 COPY . .
+
+# Copier le fichier composer.json et installer les dépendances
+RUN composer install --no-dev --optimize-autoloader
 
 # Installer PHPUnit
 RUN composer require --dev phpunit/phpunit
