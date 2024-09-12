@@ -10,7 +10,7 @@
         "files": [
             "./.env.test",
             "./phpunit.xml.dist",
-            "./tests/bootstrap.php"
+            "./scriptstyles/bootstrap.php"
         ]
     },
     "symfony/console": {
@@ -68,7 +68,7 @@
             "./.env.test",
             "./bin/phpunit",
             "./phpunit.xml.dist",
-            "./tests/bootstrap.php"
+            "./scriptstyles/bootstrap.php"
         ]
     },
     "symfony/routing": {
