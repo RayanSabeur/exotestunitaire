@@ -13,14 +13,16 @@ RUN apt-get update && apt-get install -y \
 # Définir le répertoire de travail
 WORKDIR /var/www/html
 
-# Copier le code source
-COPY . .
-
-# Installer les dépendances
+# Copier le fichier composer.json et installer les dépendances
+COPY composer.json composer.lock ./
 RUN composer install --no-dev --optimize-autoloader --no-scripts
+
+# Copier le code source et les tests
+COPY src/ src/
+COPY phpunittest/ phpunittest/
 
 # Installer PHPUnit
 RUN composer require --dev phpunit/phpunit
 
 # Commande pour exécuter les tests
-CMD ["vendor/bin/phpunit"]
+CMD ["vendor/bin/phpunit", "--testdox"]
