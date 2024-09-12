@@ -15,14 +15,13 @@ WORKDIR /var/www/html
 
 # Copier le fichier composer.json et installer les dépendances
 COPY composer.json composer.lock ./
-RUN composer install --no-dev --optimize-autoloader --no-scripts
+RUN composer install --no-dev --optimize-autoloader
 
-# Copier le code source et les tests
-COPY src/ src/
-COPY phpunittest/ phpunittest/
+# Copier le code source
+COPY . .
 
 # Installer PHPUnit
 RUN composer require --dev phpunit/phpunit
 
-# Commande pour exécuter les tests
-CMD ["vendor/bin/phpunit", "--testdox"]
+# Exécuter les tests
+CMD ["vendor/bin/phpunit"]

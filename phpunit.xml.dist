@@ -17,6 +17,14 @@
         <server name="SYMFONY_PHPUNIT_VERSION" value="9.5" />
     </php>
 
+    <phpunit bootstrap="vendor/autoload.php">
+        <testsuites>
+            <testsuite name="Application Test Suite">
+                <directory>./phpunittest</directory>
+            </testsuite>
+        </testsuites>
+    </phpunit>
+
     <testsuites>
         <testsuite name="Project Test Suite">
             <directory>tests</directory>
