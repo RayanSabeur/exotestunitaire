@@ -18,11 +18,6 @@
     </php>
 
     <phpunit bootstrap="vendor/autoload.php">
-        <testsuites>
-            <testsuite name="Application Test Suite">
-                <directory>./phpunittest</directory>
-            </testsuite>
-        </testsuites>
     </phpunit>
 
     <testsuites>
